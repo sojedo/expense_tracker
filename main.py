@@ -1,4 +1,11 @@
-expenses = []
+
+import json
+
+try:
+    with open("expenses.json", "r") as file:
+        expenses = json.load(file)
+except ValueError:
+    
 
 while True:
     print("\n=== CLI Expense Tracker ===")
@@ -7,7 +14,7 @@ while True:
     print("3. Show total")
     print("q. Quit")
 
-    choice = input("choose 1-q: ").lower()
+    choice = input("choose 1-q: ").lower().strip()
 
     if choice == "1":
         description = input("Enter description: ").strip()
@@ -44,6 +51,5 @@ while True:
         print(f"Total spent: ₦{total:.2f}")
 
     else:
-         choice != "1, 2, 3, q"
          print("invalid input: try 1, 2, 3, q")
         
