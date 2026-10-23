@@ -1,13 +1,22 @@
 
 import json
-CURRENCY = "\u20a6" 
-try:
-    with open("expenses.json", "r") as file:
-        expenses = json.load(file)
-except FileNotFoundError:
-    expenses = []
-except json.JSONDecodeError:
-    raise SystemExit("expenses.json is damaged/empty. Fix or delete it, then restart.")
+
+FILENAME = "expenses.json"
+
+def load_expenses(filename):
+    try:
+        with open(filename, "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        raise SystemExit(f"{filename} is damaged/empty. Fix it, then restart.")
+expenses = load_expenses(FILENAME)
+
+def save_expenses():
+    with open(FILENAME, "w") as file:
+        json.dump(expenses, file)
+
 
 while True:
     print("\n=== CLI Expense Tracker ===")
@@ -33,8 +42,6 @@ while True:
             continue
         expense = {"description": description, "amount": amount}
         expenses.append(expense)
-        with open("expenses.json", "w") as file:
-            json.dump(expenses, file)
         print("Expense added")
 
     elif choice == "q":
